@@ -4,12 +4,7 @@ import { Account } from './../../model/account.model';
 import { OpenAccount } from './../../model/openAccount.model';
 import { BankingService } from './../../service/banking.service';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-open-account',
@@ -33,29 +28,8 @@ export class OpenAccountComponent implements OnInit {
   pstate: string;
   pcity: string;
   ppincode: string;
-  myForm: FormGroup;
 
-  constructor(
-    private bankingService: BankingService,
-    private router: Router,
-    private formBuilder: FormBuilder
-  ) {
-    this.myForm = formBuilder.group({
-      mob: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(10),
-          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
-        ],
-      ],
-      primaryEmail: ['', [Validators.email]],
-    });
-  }
-
-  get m() {
-    return this.myForm.controls;
-  }
+  constructor(private bankingService: BankingService, private router: Router) {}
 
   ngOnInit(): void {}
   permanentsame(event) {
@@ -103,28 +77,25 @@ export class OpenAccountComponent implements OnInit {
       ' ' +
       this.pstate +
       this.ppincode;
-    console.log(this.openAccount.residentialAddress);
-    console.log(this.openAccount);
+    // console.log(this.openAccount.residentialAddress);
+    // console.log(this.openAccount);
     this.bankingService.account(this.openAccount).subscribe((data) => {
       alert(Object(data)['status']);
       console.log(Object(data)['customerId']);
-      if (Object(data)['customerId'] != null) {
-        console.log('inside c');
-        this.account.balanceAmount = 0;
-        this.account.isApproved = 1;
-        this.customer.customerId = Object(data)['customerId'];
-        this.account.customer = this.customer;
+      //  if(Object(data)['customerId']!=null){
+      //   console.log("inside c")
+      //   this.account.balanceAmount=0;
+      //   this.account.isApproved=1;
+      //   this.customer.customerId=Object(data)['customerId'];
+      //   this.account.customer=this.customer;
 
-        console.log('api ke upar');
-        console.log(this.account);
-        this.bankingService
-          .createAccountByCustomerId(this.account)
-          .subscribe((data) => {
-            alert(Object(data)['Message']);
-          });
+      //   console.log("api ke upar")
+      //   console.log(this.account)
+      //   this.bankingService.createAccountByCustomerId(this.account).subscribe(data=>{
+      //     alert(Object(data)['Message']);
+      //   });
 
-        this.router.navigate(['/login']);
-      }
+      this.router.navigate(['/login']);
     });
   }
   // public saveUsername: boolean;

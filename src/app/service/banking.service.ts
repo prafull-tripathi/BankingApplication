@@ -12,29 +12,13 @@ import { Registration } from '../model/registration.model';
 import { User } from '../model/user.model';
 import { BeneficiaryRegister } from '../model/beneficiaryRegister.model';
 import { Approval } from '../model/approval.model';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BankingService implements CanActivate {
+export class BankingService {
   constructor(private http: HttpClient) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | boolean
-    | UrlTree
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree> {
-    throw new Error('Method not implemented.');
-  }
   transactionUrl: string = 'http://localhost:8085/transaction';
   accountUrl: string = 'http://localhost:8085/account/';
   beneficiaryUrl: string = 'http://localhost:8085/beneficiary/';

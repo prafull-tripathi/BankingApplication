@@ -11,7 +11,7 @@
         Personal Details
       </legend>
       <div class="formPanel">
-        <form [formGroup]="myForm" (ngSubmit)="openAccountcus()" novalidate>
+        <form (ngSubmit)="openAccountcus()">
           <div>
             <label for="title" class="required-field">Title</label>
             <select
@@ -34,9 +34,21 @@
               id="firstName"
               name="firstName"
               required
-              #name="ngModel"
+              minlength="4"
+              #firstname="ngModel"
               [(ngModel)]="openAccount.firstName"
             />
+            <div
+              *ngIf="
+                firstname.invalid && (firstname.dirty || firstname.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="firstname.errors.required">Name is required.</div>
+              <div *ngIf="firstname.errors.minlength">
+                Name must be at least 4 characters long.
+              </div>
+            </div>
           </div>
           <br />
           <div>
@@ -56,8 +68,19 @@
               id="lastName"
               name="lastName"
               required
+              minlength="4"
+              #lastname="ngModel"
               [(ngModel)]="openAccount.lastName"
             />
+            <div
+              *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+              class="text-danger"
+            >
+              <div *ngIf="lastname.errors.required">Name is required.</div>
+              <div *ngIf="lastname.errors.minlength">
+                Last Name must be at least 4 characters long.
+              </div>
+            </div>
           </div>
           <br />
           <br />
@@ -82,7 +105,7 @@
             />
           </div>
           <br />
-          <div class="form-group">
+          <div>
             <label for="MobileNumber" class="required-field"
               >Mobile Number</label
             >
@@ -90,26 +113,24 @@
               type="text"
               id="mobileNumber"
               name="mobileNumber"
-              formControlName="mob"
               required
+              maxlength="10"
+              pattern="^[0-9]+$"
+              #mob="ngModel"
               [(ngModel)]="openAccount.mobileNumber"
             />
             <div
-              *ngIf="m.mob.touched && m.mob.invalid"
-              class="alert alert-danger"
+              *ngIf="!mob?.valid && (mob?.dirty || mob?.touched)"
+              class="text-danger"
             >
-              <div *ngIf="m.mob.errors?.required">
-                Please enter mobile number
+              <div *ngIf="mob.errors.required">Mobile Number is required</div>
+              <div *ngIf="mob.errors.maxlength">
+                Mobile Number Minimum Length is
+                {{ lastname.errors.maxlength?.requiredLength }}
               </div>
-              <div *ngIf="m.mob.errors?.length">
-                Mobile number is greater than 10 digit
-              </div>
-              <div *ngIf="m.mob.errors?.pattern">
-                Mobile number is not 10 digit
-              </div>
+              <div *ngIf="mob.errors.pattern">Only digits are allowed</div>
             </div>
           </div>
-
           <br />
           <div>
             <label for="emailId">Email ID</label>
@@ -117,9 +138,20 @@
               type="text"
               id="emailId"
               name="emailId"
+              required
+              email
+              #email="ngModel"
               [(ngModel)]="openAccount.emailId"
             />
+            <div
+              *ngIf="!email?.valid && (email?.dirty || email?.touched)"
+              class="text-danger"
+            >
+              <div *ngIf="email.errors.required">Email is required</div>
+              <div *ngIf="email.errors.email">Invalid Email Address</div>
+            </div>
           </div>
+
           <br />
           <div>
             <label for="Aadhar" class="required-field"
@@ -130,8 +162,24 @@
               id="aadharNumber"
               name="aadharNumber"
               required
+              maxlength="12"
+              pattern="^[0-9]+$"
+              #aadhar="ngModel"
               [(ngModel)]="openAccount.aadharNumber"
             />
+            <div
+              *ngIf="!aadhar?.valid && (aadhar?.dirty || aadhar?.touched)"
+              class="text-danger"
+            >
+              <div *ngIf="aadhar.errors.required">
+                Aadhar Number is required
+              </div>
+              <div *ngIf="aadhar.errors.maxlength">
+                Aadhar Number Minimum Length is
+                {{ aadhar.errors.maxlength?.requiredLength }}
+              </div>
+              <div *ngIf="aadhar.errors.pattern">Only digits are allowed</div>
+            </div>
           </div>
           <br />
           <br />
