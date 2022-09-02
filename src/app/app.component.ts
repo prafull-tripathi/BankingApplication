@@ -4,19 +4,18 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'banking';
 
-  login=false;
+  login = false;
 
-   constructor(private router:Router){}
+  constructor(private router: Router) {}
 
-  onLogin(){
-    console.log("hide");
-    this.login=true;
+  onLogin() {
+    console.log('hide');
+    this.login = true;
     this.router.navigate(['/login']);
-
   }
 }
